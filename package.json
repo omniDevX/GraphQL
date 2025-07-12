@@ -1,0 +1,35 @@
+{
+    "name": "graphql",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/omniDevX/GraphQL#readme",
+    "bugs": {
+        "url": "https://github.com/omniDevX/GraphQL/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/omniDevX/GraphQL.git"
+    },
+    "license": "ISC",
+    "author": "",
+    "type": "module",
+    "scripts": {
+        "compile": "tsc",
+        "dev": "node --loader ts-node/esm src/index.ts",
+        "start": "npm run compile && node ./dist/index.js"
+    },
+    "dependencies": {
+        "@apollo/server": "^4.12.2",
+        "@types/node": "^24.0.13",
+        "body-parser": "^2.2.0",
+        "cors": "^2.8.5",
+        "express": "^5.1.0",
+        "graphql": "^16.11.0",
+        "typescript": "^5.8.3"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "ts-node-dev": "^2.0.0"
+    }
+}
