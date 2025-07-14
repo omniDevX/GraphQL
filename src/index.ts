@@ -28,6 +28,9 @@ const resolvers: Resolvers = {
         qListings: (_, __, { dataSources }) => {
             return dataSources.listingAPI.getFeaturedListings();
         },
+        qListing: (_, { id }, { dataSources }) => {
+            return dataSources.listingAPI.getListing(id);
+        },
     },
 };
 

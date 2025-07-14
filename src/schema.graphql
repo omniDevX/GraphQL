@@ -4,16 +4,25 @@ type Book {
 }
 
 
+type Amenity {
+    id: ID!
+    category: String!
+    name: String!
+}
+
 type Listing {
     id: ID!
     title: String!
+    description: String!
     numOfBeds: Int
     costPerNight: Float
     closedForBookings: Boolean
+    amenities: [Amenity!]!
 }
 
 
 type Query {
     qBooks: [Book]
     qListings: [Listing!]!
+    qListing(id: ID!): Listing
 }
