@@ -6,35 +6,51 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { gql } from "graphql-tag";
 
+import { Resolvers } from "./types";
+import { ListingAPI } from "./datasources/listing-api.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const typeDefs = gql(readFileSync(path.resolve(__dirname, "../src/schema.graphql"), {encoding: "utf-8",}));
+const typeDefs = gql(readFileSync(path.resolve(__dirname, "../src/schema.graphql"), { encoding: "utf-8", }));
 
 const cBooks = [
-    {title: 'The Awakening',author: 'Kate Chopin',},
-    {title: 'City of Glass',author: 'Paul Auster',},
-    {title: 'Double Tree',author: 'Sam Johnson',},
+    { title: 'The Awakening', author: 'Kate Chopin', },
+    { title: 'City of Glass', author: 'Paul Auster', },
+    { title: 'Double Tree', author: 'Sam Johnson', },
 ];
 
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
-const resolvers = {
+const resolvers: Resolvers = {
     Query: {
         qBooks: () => cBooks,
+        qListings: (_, __, { dataSources }) => {
+            return dataSources.listingAPI.getFeaturedListings();
+        },
     },
 };
 
 async function startApolloServer() {
-  const server = new ApolloServer({ typeDefs, resolvers });
-  const { url } = await startStandaloneServer(server);
-  console.log(`
+    const server = new ApolloServer({ typeDefs, resolvers });
+    const { url } = await startStandaloneServer(server, {
+        context: async () => {
+            const { cache } = server;
+            return {
+                dataSources: {
+                    listingAPI: new ListingAPI({ cache }),
+                },
+            };
+        },
+    });
+
+    console.log(`
     🚀  Server is running!
     📭  Query at ${url}
   `);
 }
 
 startApolloServer().catch(error => {
-  console.error('Error starting Apollo Server:', error);
-  process.exit(1);
+    console.error('Error starting Apollo Server:', error);
+    process.exit(1);
 });

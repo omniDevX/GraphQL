@@ -3,6 +3,17 @@ type Book {
     author: String
 }
 
+
+type Listing {
+    id: ID!
+    title: String!
+    numOfBeds: Int
+    costPerNight: Float
+    closedForBookings: Boolean
+}
+
+
 type Query {
     qBooks: [Book]
+    qListings: [Listing!]!
 }
