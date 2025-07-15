@@ -14,7 +14,7 @@
     "author": "",
     "type": "module",
     "scripts": {
-        "compile": "tsc",
+        "compile": "tsup",
         "dev": "node --loader ts-node/esm src/index.ts",
         "start": "npm run compile && node ./dist/index.js",
         "generate": "graphql-codegen"
@@ -28,6 +28,7 @@
         "express": "^5.1.0",
         "graphql": "^16.11.0",
         "graphql-tag": "^2.12.6",
+        "tsup": "^8.5.0",
         "typescript": "^5.8.3"
     },
     "devDependencies": {

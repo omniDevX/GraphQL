@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import { gql } from "graphql-tag";
 
 import { Resolvers } from "./types";
-import { ListingAPI } from "./datasources/listing-api.js";
+import { ListingAPI } from "./datasources/listing-api";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
