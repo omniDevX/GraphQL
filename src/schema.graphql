@@ -20,9 +20,23 @@ type Listing {
     amenities: [Amenity!]!
 }
 
+type Article {
+  id: ID!
+  title: String!
+  summary: String!
+  content: String!
+  coverImage: String!
+  date: String!
+  views: Int!
+  likes: Int!
+  comments: Int!
+  shares: Int!
+}
+
 
 type Query {
     qBooks: [Book]
     qListings: [Listing!]!
     qListing(id: ID!): Listing
+    articles: [Article!]!
 }

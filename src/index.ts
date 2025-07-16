@@ -8,6 +8,8 @@ import { gql } from "graphql-tag";
 
 import { Resolvers } from "./types";
 import { ListingAPI } from "./datasources/listing-api";
+import mongoose from 'mongoose';
+import Article, { IArticle } from './models/article';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +22,14 @@ const cBooks = [
     { title: 'Double Tree', author: 'Sam Johnson', },
 ];
 
+const MONGO_URI = 'mongodb+srv://aiaccfin:fgXMg0LHwgLSpzAR@aiacccluster.gvoyp.mongodb.net/meitou?retryWrites=true&w=majority&appName=aiaccCluster';
+
+async function connectMongo() {
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(MONGO_URI);
+  }
+}
+
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
 const resolvers: Resolvers = {
@@ -30,6 +40,22 @@ const resolvers: Resolvers = {
         },
         qListing: (_, { id }, { dataSources }) => {
             return dataSources.listingAPI.getListing(id);
+        },
+        articles: async () => {
+            await connectMongo();
+            const articles: IArticle[] = await Article.find().sort({ date: -1 });
+            return articles.map(a => ({
+                id: a._id.toString(),
+                title: a.title,
+                summary: a.summary,
+                content: a.content,
+                coverImage: a.coverImage,
+                date: a.date.toISOString(),
+                views: a.views,
+                likes: a.likes,
+                comments: a.comments,
+                shares: a.shares,
+            }));
         },
     },
 };

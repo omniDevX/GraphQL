@@ -41,11 +41,25 @@ export type Listing = {
   title: Scalars['String']['output'];
 };
 
+export type Article = {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  coverImage: string;
+  date: string;
+  views: number;
+  likes: number;
+  comments: number;
+  shares: number;
+};
+
 export type Query = {
   __typename?: 'Query';
   qBooks?: Maybe<Array<Maybe<Book>>>;
   qListing?: Maybe<Listing>;
   qListings: Array<Listing>;
+  articles: Article[];
 };
 
 
@@ -176,6 +190,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   qBooks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
   qListing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryQListingArgs, 'id'>>;
   qListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  articles?: (parent: any, args: any, context: ContextType, info: any) => Promise<Article[]>;
 };
 
 export type Resolvers<ContextType = DataSourceContext> = {
