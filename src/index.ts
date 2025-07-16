@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
@@ -22,7 +25,7 @@ const cBooks = [
     { title: 'Double Tree', author: 'Sam Johnson', },
 ];
 
-const MONGO_URI = 'mongodb+srv://aiaccfin:fgXMg0LHwgLSpzAR@aiacccluster.gvoyp.mongodb.net/meitou?retryWrites=true&w=majority&appName=aiaccCluster';
+const MONGO_URI = process.env.MONGODB_URI;
 
 async function connectMongo() {
   if (mongoose.connection.readyState === 0) {
